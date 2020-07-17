@@ -1,0 +1,45 @@
+@import "../variables";
+
+// 页面主体内容
+.wrapper {
+  margin: 16px 0;
+  padding: 0 15px;
+  // background-color: #fff;
+  // 内容框架(可以有多个)
+  .wrap {
+    // 内容标题
+    margin-bottom: 20px;
+    .title {
+      position: relative;
+      padding: 5px 15px 5px 30px;
+      font-size: 16px;
+      height: 40px;
+      line-height: 30px;
+      font-weight: normal;
+      &:before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 3px;
+        height: 20px;
+        background-color: $mainColor;
+      }
+    }
+    > .title {
+      border-bottom: 1px solid #eee;
+    }
+    // 内容主体
+    .content {
+      padding: 20px;
+      .box {
+        margin-top: 20px;
+      }
+    }
+  }
+  .page-box {
+    margin-top: 20px;
+    text-align: center;
+  }
+}

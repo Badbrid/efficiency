@@ -1,6 +1,7 @@
 <template>
-  <div class="login">
+  <div class="login" v-if="ready">
     <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="form">
+      <h3>登录页面</h3>
       <el-form-item label="用户名" label-width="80px" prop="username">
         <el-input class="item"  v-model="form.username" autocomplete="off"></el-input>
       </el-form-item>
@@ -36,22 +37,44 @@ export default {
       ready: false
     };
   },
+  created() {
+    this.$axios.get("/isLogin").then(res =>{
+      if(res.success){
+        this.ready = true;
+      }else{
+        window.location.refs = "/"
+      }
+    }),
+    document.addEventListener("keydown",this.watchEnter);
+  },
+  destroyed() {
+      //移除监听回车按键
+      document.removeEventListener("keydown", this.watchEnter);
+    },
   methods: {
+      //监听回车按钮事件
+      watchEnter(e){
+        //获取被按下的键值
+        let kyeNum = e.which;
+        //判断如果用户按下了回车键（keycody=13）
+        if(kyeNum === 13){
+          // 按下回车按钮要做的事
+          this.submitForm('form');
+        }
+      },
       submitForm(form) {
         this.$refs[form].validate((valid) => {
           if (valid) {
-            this.$axios({
-              methods: 'post',
-              url: '/signin',
-              data: this.form
-            }).then(res => {
+            this.$axios.post("/signin",this.form
+            ).then(res => {
               let language = res.data.language;
               if (!language) {
                 this.$axios({
                   methods: 'get',
                   url: '/language'
                 }).then(res => {
-                  language = res.data.language;
+                  language = res.data;
+                  console.log(language);
                   localStorage.setItem(DEFAULT_LANGUAGE, language);
                   window.location.href = "/"
                   })
@@ -65,9 +88,6 @@ export default {
           }
         });
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
     }
 };
 </script>

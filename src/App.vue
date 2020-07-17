@@ -1,32 +1,61 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">login</router-link>
-    </div>
-    <router-view />
+  <div class="app fn-clear">
+    <el-header height="61px">
+      <app-header class="app-header"/>
+    </el-header>
+    <el-main>
+      <router-view class="app-main"/>
+      <el-footer height="40px">
+        <p>Copyright © test.</p>
+      </el-footer>
+    </el-main>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import AppHeader from './components/common/header';
+export default {
+  components: {AppHeader},
+  data() {
+    return {};
+  } 
 }
+</script>
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<style lang="scss" scope>
+.app{
+  overflow: hidden;
+  height:100%;
+}
+.app-header{
+  display: flex;
+}
+.el-main,
+.el-footer{
+  margin: 0 auto;
+  padding: 0;
+  min-width: 800px;
+  max-width: 1200px;
+}
+.el-header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: 1px solid #e9e9e9;
+  .app-header{
+    height: 60px;
   }
+}
+.el-main{
+  position: relative;
+  margin-top: 60px;
+  .app-main{
+    min-height: 500px;
+  }
+}
+.el-footer{
+  text-align: center;
 }
 </style>
