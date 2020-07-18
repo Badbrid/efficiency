@@ -20,10 +20,11 @@ export default {
   data() {
     return {
       isShowNav: true,
-      activeNav: "dashboard",
+      activeNav: "log",
       navList: [],
-      navList1: [{name: "仪表盘", route: "dashboard" },{ name: "待办事项", route: "memo" }],
-      navList2: [{ name: "产品管理", route: "product" }, { name: "目标设定", route: "kpi" }]
+      navList1: [{name: "代理日志", route: "log" },{ name: "接口代理配置", route: "proxyConfiguration" }],
+      navList2: [{ name: "接口管理", route: "apiHome" }],
+      navList3: [{ name: "测试管理", route: "testProcessName"}]
     };
   },
   computed:{
@@ -34,6 +35,8 @@ export default {
         navList = this.navList1;
       } else if (this.navList2.some(item => item.route === routeName)) {
         navList = this.navList2;
+      } else if (this.navList3.some(item => item.route === routeName)) {
+        navList = this.navList3;
       }
       console.log(navList);
       

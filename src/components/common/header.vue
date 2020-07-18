@@ -2,7 +2,7 @@
     <div class="fn-clear" >
         <div class="logo">
             <a href="/">
-                <img src="@/assets/logo.png" alt="test" width="100"/>
+                <img src="@/assets/logo.png" alt="test" width="60"/>
             </a>
         </div>
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">

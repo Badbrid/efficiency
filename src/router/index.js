@@ -5,9 +5,9 @@ import NavComponent from '../components/common/nav';
 import log from '../components/logProxy/log';
 import proxyConfiguration from '../components/logProxy/proxyConfiguration';
 //接口管理
-import api from '../components/api/home';
+import apiHome from '../components/api/home';
 //测试流程
-import testProcess from '../components/testProcess/home';
+import testProcessName from '../components/testProcess/home';
 
 Vue.use(VueRouter);
 
@@ -50,14 +50,14 @@ const router = new VueRouter({
 		{
 			name: 'api',
 			path: '/api',
-			redirect: '/home',
+			redirect: '/api/home',
 			component: NavComponent,
 			children: [
 				{
-					name: 'home',
-					path: '/home',
+					name: 'apiHome',
+					path: '/api/home',
 					meta: { title: '接口管理', level: 1 },
-					component: api
+					component: apiHome
 				}
 			]
 		},
@@ -69,16 +69,16 @@ const router = new VueRouter({
 			children: [
 				{
 					path: '/testProcess/home',
-					name: 'trackHome',
+					name: 'testProcessName',
 					meta: { title: '测试管理', level: 1 },
-					component: testProcess
+					component: testProcessName
 				}
 			]
 		},
 		{
 			name: 'default_404',
 			path: '404',
-			component: testProcess
+			component: testProcessName
 		}
 	]
 	// scrollBehavior(to, from, savedPosition) {
