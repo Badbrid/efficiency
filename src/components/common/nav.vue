@@ -59,10 +59,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 .navBox {
-  position: absolute;
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  // position: absolute;
+  float: left;
+  margin-right: 10px;
   top: 0;
   left: 0;
-  width: 170px;
+  width: 150px;
   height: 100%;
   border-right: 1px solid #e9e9e9;
   .navItems {
@@ -73,12 +79,15 @@ export default {
         text-decoration: none;
         // padding:0 20px;
         // text-indent: 5px;
+        text-align: center;
         display: inline-block;
         width: 100%;
         height: 56px;
         line-height: 56px;
         font-size: 14px;
+        margin-bottom: 2px;
         color:#999;
+        background-color: #ccc;
         &:hover{
           color: #10a296;
           font-weight: bold;
@@ -96,7 +105,8 @@ export default {
   }
 }
 .main {
-  margin-left: 160px;
-  // float: right;
+  // margin-left: 10px;
+  width: 100%;
+  float: left;
 }
 </style>

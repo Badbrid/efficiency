@@ -50,7 +50,9 @@ export default {
 .el-main{
   position: relative;
   margin-top: 60px;
+  background-color: #f5f5f5;
   .app-main{
+    display: flex;
     min-height: 500px;
   }
 }
