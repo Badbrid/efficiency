@@ -30,7 +30,6 @@ export default {
 .app-header{
   display: flex;
 }
-.el-main,
 .el-footer{
   margin: 0 auto;
   padding: 0;

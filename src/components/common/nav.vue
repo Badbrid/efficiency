@@ -62,13 +62,17 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 140px;
+  width: 170px;
   height: 100%;
   border-right: 1px solid #e9e9e9;
   .navItems {
+    list-style: none;
+    padding-inline-start: 16px;
     .navItem{
       a{
-        padding:0 20px;
+        text-decoration: none;
+        // padding:0 20px;
+        // text-indent: 5px;
         display: inline-block;
         width: 100%;
         height: 56px;
@@ -86,13 +90,13 @@ export default {
         background: rgba(#10a296, 0.1);
         &:hover{
           font-weight: initial;
-
         }
       }
     }
   }
 }
 .main {
-  margin-left: 140px;
+  margin-left: 160px;
+  // float: right;
 }
 </style>
