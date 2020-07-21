@@ -12,7 +12,7 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onAdd">增加代理配置</el-button>
+                    <el-button  @click="onAdd">增加代理配置</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onClear">清除记录</el-button>
@@ -45,23 +45,13 @@
         console.log('submit!');
       },
       onAdd() {
-        this.$prompt('请输入邮箱', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-          inputErrorMessage: '邮箱格式不正确',
-          inputValue: "das"
-        }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: '你的邮箱是: ' + value
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });       
-        });
+        this.$newDialog({
+        data:{
+          list: []
+        }
+      }, (data)=>{
+        // this.$message({type: "info", message: JSON.stringify(data)})
+      })
       }
     }
   }
