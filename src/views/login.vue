@@ -1,5 +1,5 @@
 <template>
-  <div class="login" v-if="ready">
+  <div class="login" >
     <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="form">
       <h3>登录页面</h3>
       <el-form-item label="用户名" label-width="80px" prop="username">
@@ -74,21 +74,21 @@ export default {
       submitForm(form) {
         this.$refs[form].validate((valid) => {
           if (valid) {
-            this.$axios.post("/signin",this.form
+            this.$axios.post("/api/signin",this.form
             ).then(res => {
               let language = res.data.language;
               if (!language) {
                 this.$axios({
                   methods: 'get',
-                  url: '/language'
+                  url: '/api/language'
                 }).then(res => {
                   language = res.data;
                   console.log(language);
                   localStorage.setItem(DEFAULT_LANGUAGE, language);
-                  window.location.href = "/"
+                  this.$router.replace({name: "index"})
                   })
                 } else {
-                  window.location.href = "/"
+                  this.$router.replace({name: "index"})
                 }
               })
           } else {

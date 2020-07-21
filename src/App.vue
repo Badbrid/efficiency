@@ -18,17 +18,18 @@ export default {
   components: {AppHeader},
   data() {
     return {};
-  } ,
+  }, 
   beforeCreate() {
     this.$axios.get("/api/isLogin").then(res =>{
       if(res.success){
         this.$setLang(res.data);
       } else {
-        window.location.href= '/login';
+        this.$router.replace({name: "login"})
+        // window.location.href= '/login';
       }
     })
     .catch(() =>{
-      window.location.href= '/login';
+      // window.location.href= '/login';
     })
   }
 }

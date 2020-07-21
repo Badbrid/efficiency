@@ -1,5 +1,9 @@
 module.exports = {
 	devServer: {
+		host: 'test.zhangsht.com',
+		port: 8081,
+		hot: true,
+		open: true,
 		proxy: {
 			'/api': {
 				target: 'http://localhost:8090', // 你要请求的后端接口ip+port
