@@ -18,7 +18,19 @@ export default {
   components: {AppHeader},
   data() {
     return {};
-  } 
+  } ,
+  beforeCreate() {
+    this.$axios.get("/api/isLogin").then(res =>{
+      if(res.success){
+        this.$setLang(res.data);
+      } else {
+        window.location.href= '/login';
+      }
+    })
+    .catch(() =>{
+      window.location.href= '/login';
+    })
+  }
 }
 </script>
 
@@ -33,8 +45,8 @@ export default {
 .el-footer{
   margin: 0 auto;
   padding: 0;
-  min-width: 800px;
-  max-width: 1200px;
+  // min-width: 800px;
+  // max-width: 1200px;
 }
 .el-header{
   position: fixed;
@@ -48,6 +60,7 @@ export default {
   }
 }
 .el-main{
+  height: 830px;
   position: relative;
   margin-top: 60px;
   background-color: #f5f5f5;
@@ -57,6 +70,8 @@ export default {
   }
 }
 .el-footer{
+  line-height: 40px;
+  color: #999;
   text-align: center;
 }
 </style>

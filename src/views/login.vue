@@ -37,14 +37,23 @@ export default {
       ready: false
     };
   },
+  beforeCreate() {
+      this.$get("/isLogin").then(response => {
+        if (!response.success) {
+          this.ready = true;
+        } else {
+          window.location.href = "/"
+        }
+      })
+  },
   created() {
-    this.$axios.get("/isLogin").then(res =>{
-      if(res.success){
-        this.ready = true;
-      }else{
-        window.location.refs = "/"
-      }
-    }),
+    // this.$axios.get("/api/isLogin").then(res =>{
+    //   if(!res.success){
+    //     this.ready = true;
+    //   }else{
+    //     window.location.refs = "/"
+    //   }
+    // }),
     document.addEventListener("keydown",this.watchEnter);
   },
   destroyed() {
