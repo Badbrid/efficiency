@@ -6,14 +6,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
 import axios from './utils/request';
 // 全局组件
-import dialog from './components/common/dialog/index';
-
+import { NewDialog } from './components/common/dialog/index.js';
+console.log(NewDialog);
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
 Vue.prototype.$axios = axios;
 
-Vue.use(dialog);
+Vue.use(NewDialog);
 
 new Vue({
 	router,

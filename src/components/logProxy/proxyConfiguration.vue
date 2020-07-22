@@ -12,7 +12,7 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button  @click="onAdd">增加代理配置</el-button>
+                    <el-button type="primary" @click="onAdd">增加代理配置</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onClear">清除记录</el-button>
@@ -33,28 +33,31 @@
             ConfigTable
         },
         data() {
-        return {
-            formInline: {
-                sourceUrl: '',
-                targetUrl: '',
+            return {
+                formInline: {
+                    sourceUrl: '',
+                    targetUrl: '',
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                console.log('submit!');
+            },
+            onAdd() {
+                this.$newDialog({
+                    data:{
+                        list: []
+                    }
+                }, (data)=>{
+                    // this.$message({type: "info", message: JSON.stringify(data)})
+                })
+            },
+            onClear() {
+                console.log(this)
             }
         }
-    },
-    methods: {
-      onSubmit() {
-        console.log('submit!');
-      },
-      onAdd() {
-        this.$newDialog({
-        data:{
-          list: []
-        }
-      }, (data)=>{
-        // this.$message({type: "info", message: JSON.stringify(data)})
-      })
-      }
     }
-  }
 </script>
 
 <style lang="scss" scoped>
