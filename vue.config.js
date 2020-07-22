@@ -1,7 +1,7 @@
 module.exports = {
 	devServer: {
 		host: 'test.zhangsht.com',
-		port: 8081,
+		port: 8092,
 		// hot: true,
 		open: true,
 		proxy: {

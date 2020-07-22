@@ -42,7 +42,7 @@
         },
         methods: {
             onSubmit() {
-                console.log('submit!');
+                
             },
             onAdd() {
                 this.$newDialog({
@@ -50,7 +50,7 @@
                         list: []
                     }
                 }, (data)=>{
-                    // this.$message({type: "info", message: JSON.stringify(data)})
+                    this.$message({type: "info", message: JSON.stringify(data)})
                 })
             },
             onClear() {

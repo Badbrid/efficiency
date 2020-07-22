@@ -9,21 +9,21 @@
             </el-form-item>
             <el-form-item label="是否启用" :label-width="formLabelWidth" prop="enable">
                 <el-select v-model="form.enable" placeholder="请选择是否启用">
-                    <el-option label="是" value="ture"></el-option>
-                    <el-option label="否" value="false"></el-option>
+                    <el-option label="是" :value="true"></el-option>
+                    <el-option label="否" :value="false"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="是否自定义请求" :label-width="formLabelWidth" prop="reqParams">
-                <el-input v-model="form.reqParams" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="是否自定义响应" :label-width="formLabelWidth" prop="respResult">
-                <el-input v-model="form.respResult" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="自定义请求" :label-width="formLabelWidth" prop="resquestParams">
                 <el-input v-model="form.resquestParams" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="自定义响应" :label-width="formLabelWidth" prop="responseResult">
+            <el-form-item label="是否自定义响应" :label-width="formLabelWidth" prop="respResult">
                 <el-input v-model="form.responseResult" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="自定义请求" :label-width="formLabelWidth" prop="resquestParams">
+                <el-input v-model="form.reqParams" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="自定义响应" :label-width="formLabelWidth" prop="responseResult">
+                <el-input v-model="form.respResult" autocomplete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
