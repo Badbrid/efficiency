@@ -28,6 +28,7 @@
 </template>
 <script>
     import ConfigTable from './configTable';
+    import Bus from '../api/common/bus.js';
     export default {
         components: {
             ConfigTable
@@ -42,7 +43,8 @@
         },
         methods: {
             onSubmit() {
-                this.$store.dispatch('proxyConfig/addSearchUrl', this.formInline);
+                // this.$store.dispatch('proxyConfig/addSearchUrl', this.formInline);
+                Bus.$emit('val', this.formInline)
             },
             onAdd() {
                 this.$newDialog({

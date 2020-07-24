@@ -46,7 +46,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            type="text"
+            type="primary"
             @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
           <el-button
             size="mini"
@@ -61,7 +61,8 @@
 
 <script>
   import tablePagination from '../common/pagination/TablePagination';
-  import { mapState, mapMutations, mapGetters } from 'vuex';
+  import Bus from '../api/common/bus.js';
+  // import { mapState, mapMutations, mapGetters } from 'vuex';
   export default {
     components: {
       tablePagination,
@@ -73,43 +74,49 @@
           total: 1,
           pageNo: 1,
           tableData: [],
-          sourceUrl:'',
-          targetUrl:''
+          // sourceUrl:'',
+          // targetUrl:''
+          formInline: {
+                    sourceUrl: '',
+                    targetUrl: ''
+                } 
         }
       },
     // computed: mapState({
     //     configList: state => state.proxyConfig.configList,
     //     tableDataReload: state => state.proxyConfig.tableDataReload
     // }),
-    computed:{
-        ...mapState({
-            configList: state => state.proxyConfig.configList,
-            tableDataReload: state => state.proxyConfig.tableDataReload
-        }),
-        ...mapGetters('proxyConfig',{
-            configList1: 'doneConfigList',
-        })
-    },
+    // computed:{
+    //     ...mapState({
+    //         configList: state => state.proxyConfig.configList,
+    //         tableDataReload: state => state.proxyConfig.tableDataReload
+    //     }),
+    //     ...mapGetters('proxyConfig',{
+    //         configList1: 'doneConfigList',
+    //     })
+    // },
     activated() {
         this.initTableData();
     },
-    watch: {
-      configList: function (tableDataReload) {
-      // 检查是否需要刷新页面
-      if (tableDataReload) {
-        this.initTableData(),
-        // 重新将刷新设为false
-        // this.$store.dispatch('proxyConfig/setReload')
-        this.setTableDataReload()
-      }
-    }
-
-    },
+    // watch: {
+    //   configList: function (tableDataReload) {
+    //   // 检查是否需要刷新页面
+    //   if (tableDataReload) {
+    //     this.initTableData(),
+    //     // 重新将刷新设为false
+    //     // this.$store.dispatch('proxyConfig/setReload')
+    //     this.setTableDataReload()
+    //   }
+    // }
+    // },
     methods: {
         // 添加mutations方法映射
-        ...mapMutations(['setTableDataReload']),
+        // ...mapMutations(['setTableDataReload']),
         handleEdit(index, row) {
           console.log(index, row);
+          this.$newDialog({
+            
+          })
         },
         handleDelete(index, row) {
           console.log(index, row);
@@ -120,8 +127,8 @@
             params:{
               pageNo : this.currentPage,
               pageSize : this.pageSize,
-              sourceUrl : this.configList.sourceUrl,
-              targetUrl : this.configList.targetUrl
+              sourceUrl : this.formInline.sourceUrl,
+              targetUrl : this.formInline.targetUrl
             }
           }).then(res =>{
             if(res.success){
@@ -130,7 +137,17 @@
               this.pageNo = res.data.pageNo;
             }
           })
-        }
+        },
+
       },
+      mounted: function () {
+      var vm = this
+      // 用$on事件来接收参数
+      Bus.$on('val', (data) => {
+        console.log(data)
+        vm.formInline = data
+        this.initTableData()
+      })
+    },
   }
 </script>

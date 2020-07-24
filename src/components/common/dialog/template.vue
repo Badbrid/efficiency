@@ -66,7 +66,7 @@ export default {
    },
    methods: {
        createConfig(createProxyForm) {
-           console.log(createProxyForm)
+        //    console.log(createProxyForm)
            this.$refs[createProxyForm].validate((valid) =>{
                if(valid){
                    this.$axios.post(this.createPath,this.form).then(res =>{
