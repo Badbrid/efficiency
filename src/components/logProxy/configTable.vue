@@ -61,7 +61,7 @@
 
 <script>
   import tablePagination from '../common/pagination/TablePagination';
-  import { mapState, mapMutations } from 'vuex';
+  import { mapState, mapMutations, mapGetters } from 'vuex';
   export default {
     components: {
       tablePagination,
@@ -77,10 +77,19 @@
           targetUrl:''
         }
       },
-    computed: mapState({
-        configList: state => state.proxyConfig.configList,
-        tableDataReload: state => state.proxyConfig.tableDataReload
-    }),
+    // computed: mapState({
+    //     configList: state => state.proxyConfig.configList,
+    //     tableDataReload: state => state.proxyConfig.tableDataReload
+    // }),
+    computed:{
+        ...mapState({
+            configList: state => state.proxyConfig.configList,
+            tableDataReload: state => state.proxyConfig.tableDataReload
+        }),
+        ...mapGetters('proxyConfig',{
+            configList1: 'doneConfigList',
+        })
+    },
     activated() {
         this.initTableData();
     },
@@ -90,7 +99,8 @@
       if (tableDataReload) {
         this.initTableData(),
         // 重新将刷新设为false
-        this.$store.dispatch('proxyConfig/setReload')
+        // this.$store.dispatch('proxyConfig/setReload')
+        this.setTableDataReload()
       }
     }
 

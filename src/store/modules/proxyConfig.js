@@ -5,8 +5,14 @@ const state = {
 	configList: [],
 	tableDataReload: false
 };
-
-const getter = {};
+const getters = {
+	getConfigListValue: state => {
+		return state.configList;
+	},
+	doneConfigList: (state, getters) => {
+		return getters.configList;
+	}
+};
 
 const mutations = {
 	[PROXYCONFIG.GETPROXYCONFIGLIST](state, products) {
@@ -32,7 +38,7 @@ const actions = {
 export default {
 	namespaced: true,
 	state,
-	getter,
+	getters,
 	mutations,
 	actions
 };
