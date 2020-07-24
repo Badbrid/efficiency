@@ -61,45 +61,65 @@
 
 <script>
   import tablePagination from '../common/pagination/TablePagination';
+  import { mapState, mapMutations } from 'vuex';
   export default {
     components: {
       tablePagination,
     },
-    data() {
-      return {
-        currentPage: 1,
-        pageSize: 5,
-        total: 1,
-        pageNo: 1,
-        tableData: []
-      }
-    },
+      data() {
+        return {
+          currentPage: 1,
+          pageSize: 5,
+          total: 1,
+          pageNo: 1,
+          tableData: [],
+          sourceUrl:'',
+          targetUrl:''
+        }
+      },
+    computed: mapState({
+        configList: state => state.proxyConfig.configList,
+        tableDataReload: state => state.proxyConfig.tableDataReload
+    }),
     activated() {
-      this.initTableData();
+        this.initTableData();
+    },
+    watch: {
+      configList: function (tableDataReload) {
+      // 检查是否需要刷新页面
+      if (tableDataReload) {
+        this.initTableData(),
+        // 重新将刷新设为false
+        this.$store.dispatch('proxyConfig/setReload')
+      }
+    }
+
     },
     methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
+        // 添加mutations方法映射
+        ...mapMutations(['setTableDataReload']),
+        handleEdit(index, row) {
+          console.log(index, row);
+        },
+        handleDelete(index, row) {
+          console.log(index, row);
+        },
+        initTableData(){
+          this.$axios.get("/auto/proxy/config/list",{
+            params:{
+              pageNo : this.currentPage,
+              pageSize : this.pageSize,
+              sourceUrl : this.configList.sourceUrl,
+              targetUrl : this.configList.targetUrl
+            }
+          }).then(res =>{
+            if(res.success){
+              this.tableData = res.data.list;
+              this.total = res.data.total;
+              this.pageNo = res.data.pageNo;
+            }
+          })
+        }
       },
-      handleDelete(index, row) {
-        console.log(index, row);
-      },
-      initTableData(){
-        this.$axios.get("/auto/proxy/config/list",{
-          params:{
-            pageNo : this.currentPage,
-            pageSize : this.pageSize,
-          }
-        }).then(res =>{
-          if(res.success){
-            this.tableData = res.data.list;
-            this.total = res.data.total;
-            // this.pageSize = res.data.pageSize;
-            this.pageNo = res.data.pageNo;
-            // this.currentPage = res.data.page;
-          }
-        })
-      }
-    },
   }
 </script>

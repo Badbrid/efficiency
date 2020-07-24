@@ -1,6 +1,6 @@
 module.exports = {
 	devServer: {
-		host: 'test.zhangsht.com',
+		// host: 'http://localhost',
 		port: 8092,
 		// hot: true,
 		open: true,
