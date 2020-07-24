@@ -12,7 +12,7 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onAdd(formInline)">增加代理配置</el-button>
+                    <el-button type="primary" @click="onAdd()">增加代理配置</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onClear">清除记录</el-button>
@@ -34,14 +34,15 @@
         },
         data() {
             return {
-                formInline: [
-                    {  sourceUrl: '', targetUrl: ''}
-                    ]
+                formInline: {
+                    sourceUrl: '',
+                    targetUrl: ''
+                }   
             }
         },
         methods: {
-            onSubmit(formInline) {
-                this.$store.dispatch('proxyConfig/addSearchUrl',formInline);
+            onSubmit() {
+                this.$store.dispatch('proxyConfig/addSearchUrl', this.formInline);
             },
             onAdd() {
                 this.$newDialog({
