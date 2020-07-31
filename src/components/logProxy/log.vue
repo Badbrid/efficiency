@@ -1,37 +1,86 @@
 <template>
-  <el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="审批人">
-    <el-input v-model="formInline.user" placeholder="审批人"></el-input>
-  </el-form-item>
-  <el-form-item label="活动区域">
-    <el-select v-model="formInline.region" placeholder="活动区域">
-      <el-option label="区域一" value="shanghai"></el-option>
-      <el-option label="区域二" value="beijing"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit">查询</el-button>
-  </el-form-item>
-</el-form>
+  <div class="log">
+    <div class="heard">
+      <!-- <div class="block">
+        <el-date-picker
+          v-model="startData"
+          type="date"
+          placeholder="开始日期">
+        </el-date-picker>
+      </div>
+      <div class="block">
+        <el-date-picker
+          v-model="endData"
+          type="date"
+          placeholder="结束日期">
+        </el-date-picker>
+      </div> -->
+      <div class="top">
+        <el-form :inline="true" :model="formInlog" class="demo-form-inline">
+          <el-form-item >
+            <el-date-picker v-model="formInlog.startDate" type="date"  placeholder="开始日期"></el-date-picker>
+          </el-form-item>
+          <el-form-item >
+            <el-date-picker v-model="formInlog.endDate" type="date"  placeholder="结束日期"> </el-date-picker>
+          </el-form-item>
+          <el-form-item >
+            <el-input v-model="formInlog.sourceUrl" placeholder="接口地址" prefix-icon="el-icon-search"></el-input>
+          </el-form-item>
+          <el-form-item >
+            <el-input v-model="formInlog.targetUrl" placeholder="目标地址" prefix-icon="el-icon-search"></el-input>
+          </el-form-item>
+          <el-form-item >
+            <el-input v-model="formInlog.requestPlaintext" placeholder="请求参数明文" prefix-icon="el-icon-search"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onClear">清除记录</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <div class="buttom">
+      <keep-alive>
+        <log-table ref="upLogTable"/>
+      </keep-alive>
+    </div>
+  </div>
 </template>
 <script>
+  import LogTable from './logTable';
   export default {
+    components:{
+      LogTable
+    },
     data() {
       return {
-        formInline: {
-          user: '',
-          region: ''
-        }
+        formInlog: {
+          startDate: '',
+          endDate: '',  
+          sourceUrl: '',
+          targetUrl: '',
+          requestPlaintext: ''
+        },
       }
     },
     methods: {
       onSubmit() {
-        console.log('submit!');
+        this.$refs.upLogTable.updataLogTable(this.formInlog);
+      },
+      onClear() {
+        this.$axios.post("/auto/proxy/log/clear",this.formInlog).then(res =>{
+          if(res.success){
+            this.formInlog = {};
+            this.$refs.upLogTable.updataLogTable(this.formInlog);
+          }
+        })
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-// @import "../../sass/components/wrap.scss";
+
 </style>

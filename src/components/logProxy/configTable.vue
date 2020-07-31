@@ -113,13 +113,26 @@
         // 添加mutations方法映射
         // ...mapMutations(['setTableDataReload']),
         handleEdit(index, row) {
-          console.log(index, row);
           this.$newDialog({
-            
-          })
+            data: {
+               row
+            }
+          }, (data) =>{
+            this.tableData = data,
+            this.initTableData();
+          }
+          )
         },
         handleDelete(index, row) {
-          console.log(index, row);
+          console.log(row.id);
+          this.$axios.delete("/auto/proxy/config/del",{
+            params:{
+              id : row.id,
+            }}).then(res =>{
+              if(res.success){
+                this.initTableData();
+              }
+            })
         },
         initTableData(){
           console.log(this.configList)
@@ -138,16 +151,15 @@
             }
           })
         },
-
       },
       mounted: function () {
-      var vm = this
-      // 用$on事件来接收参数
-      Bus.$on('val', (data) => {
-        console.log(data)
-        vm.formInline = data
-        this.initTableData()
-      })
+        var vm = this
+        // 用$on事件来接收参数
+        Bus.$on('val', (data) => {
+          console.log(data)
+          vm.formInline = data
+          this.initTableData()
+        })
     },
   }
 </script>
