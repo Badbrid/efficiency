@@ -131,7 +131,7 @@
     }
 </script>
 <style ang="scss">
-.el-tooltip__popper{max-width: 450px}
+.el-tooltip__popper{max-width: 50%}
 .el-notification{
   position: fixed;
   top: 50% !important;

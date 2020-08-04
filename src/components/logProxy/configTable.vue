@@ -135,7 +135,6 @@
             })
         },
         initTableData(){
-          console.log(this.configList)
           this.$axios.get("/auto/proxy/config/list",{
             params:{
               pageNo : this.currentPage,

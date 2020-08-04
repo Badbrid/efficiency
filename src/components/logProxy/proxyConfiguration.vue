@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <h1>接口代理配置</h1>
         <div class="top">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
                 <el-form-item >
@@ -22,7 +21,7 @@
         </div>
         <div class="bottom">
             <keep-alive>
-            <config-table/>
+            <config-table ref="upConfigTable"/>
             </keep-alive>
         </div>
     </div>
@@ -53,7 +52,10 @@
                         list: []
                     }
                 }, (data)=>{
+                    console.log(22222222233322)
                     this.$message({type: "info", message: JSON.stringify(data)})
+                    console.log(22222222222)
+                    this.$refs.upConfigTable.initTableData();
                 })
             },
             onClear() {
