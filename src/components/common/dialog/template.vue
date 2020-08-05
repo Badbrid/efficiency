@@ -81,6 +81,7 @@ export default {
                    this.$axios.post(this.createPath,this.form).then(res =>{
                        if(res.success){
                            this.dialogFormVisible = false;
+                           this.$options.options.data.callback();
                        }
                    })
                }

@@ -16,6 +16,9 @@ export default {
 				}
 			});
 		},
-		submit(data) {}
+		submit(data) {
+			console.log(222222);
+			console.log(data);
+		}
 	}
 };

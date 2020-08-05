@@ -22,5 +22,17 @@ module.exports = {
 				}
 			}
 		}
+	},
+	pages: {
+		business: {
+			entry: 'src/main.js',
+			template: 'src/index.html',
+			filename: 'index.html'
+		},
+		login: {
+			entry: 'src/views/login.js',
+			template: 'src/views/login.html',
+			filename: 'login.html'
+		}
 	}
 };

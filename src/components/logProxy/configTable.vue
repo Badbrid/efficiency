@@ -61,7 +61,6 @@
 
 <script>
   import tablePagination from '../common/pagination/TablePagination';
-  import Bus from '../api/common/bus.js';
   // import { mapState, mapMutations, mapGetters } from 'vuex';
   export default {
     components: {
@@ -70,7 +69,7 @@
       data() {
         return {
           currentPage: 1,
-          pageSize: 5,
+          pageSize: 10,
           total: 1,
           pageNo: 1,
           tableData: [],
@@ -115,11 +114,8 @@
         handleEdit(index, row) {
           this.$newDialog({
             data: {
-               row
+               row:row,callback:this.updateConfig
             }
-          }, (data) =>{
-            this.tableData = data,
-            this.initTableData();
           }
           )
         },
@@ -150,15 +146,19 @@
             }
           })
         },
+        monitoring() { // 监听事件
+          this.$on('queryMethod', (res) => {
+              this.formInline.sourceUrl = res.sourceUrl;
+              this.formInline.targetUrl = res.targetUrl;
+              this.initTableData();
+          })
+        },
+        updateConfig() {
+          this.initTableData();
+        }
       },
       mounted: function () {
-        var vm = this
-        // 用$on事件来接收参数
-        Bus.$on('val', (data) => {
-          console.log(data)
-          vm.formInline = data
-          this.initTableData()
-        })
+        this.monitoring() // 注册监听事件
     },
   }
 </script>

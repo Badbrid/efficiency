@@ -8,11 +8,13 @@
             <el-table-column
             prop="deviceId"
             label="设备Id"
+            :show-overflow-tooltip="true"
             width="180">
             </el-table-column>
             <el-table-column
             prop="sourceUrl"
             label="接口地址"
+            :show-overflow-tooltip="true"
             width="180">
             </el-table-column>
             <el-table-column
@@ -69,7 +71,7 @@
         data() {
             return {
                 currentPage: 1,
-                pageSize: 5,
+                pageSize: 10,
                 total: 1,
                 pageNo: 1,
                 tableData: [],
@@ -89,7 +91,7 @@
             initLogTable() {
                 this.$axios.get('/auto/proxy/log/list',{
                     params:{
-                        pageNo: this.pageNo,
+                        pageNo: this.currentPage,
                         pageSize: this.pageSize,
                         startDate: this.formInlog.startDate,
                         endDate: this.formInlog.endDate,

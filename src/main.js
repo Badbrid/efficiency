@@ -8,7 +8,6 @@ import axios from './utils/request';
 import VueClipboard from 'vue-clipboard2';
 // 全局组件
 import { NewDialog } from './components/common/dialog/index.js';
-console.log(NewDialog);
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 

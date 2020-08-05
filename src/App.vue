@@ -22,14 +22,14 @@ export default {
   beforeCreate() {
     this.$axios.get("/api/isLogin").then(res =>{
       if(res.success){
-        this.$setLang(res.data);
+        // this.$setLang(res.data);
       } else {
-        this.$router.replace({name: "login"})
-        // window.location.href= '/login';
+        console.log(1111111)
+        window.location.href= '/login';
       }
     })
     .catch(() =>{
-      // window.location.href= '/login';
+      window.location.href= '/login';
     })
   }
 }

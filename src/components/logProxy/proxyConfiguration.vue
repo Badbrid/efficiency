@@ -28,7 +28,7 @@
 </template>
 <script>
     import ConfigTable from './configTable';
-    import Bus from '../api/common/bus.js';
+    // import Bus from '../api/common/bus.js';
     export default {
         components: {
             ConfigTable
@@ -44,22 +44,22 @@
         methods: {
             onSubmit() {
                 // this.$store.dispatch('proxyConfig/addSearchUrl', this.formInline);
-                Bus.$emit('val', this.formInline)
+                // Bus.$emit('val', this.formInline)
+                this.$refs.upConfigTable.$emit('queryMethod',this.formInline)
             },
             onAdd() {
                 this.$newDialog({
                     data:{
-                        list: []
+                        list: [],callback:this.updateConfig
                     }
-                }, (data)=>{
-                    console.log(22222222233322)
-                    this.$message({type: "info", message: JSON.stringify(data)})
-                    console.log(22222222222)
-                    this.$refs.upConfigTable.initTableData();
                 })
             },
             onClear() {
                 console.log(this)
+            },
+            updateConfig() {
+                this.$message({type: "info", message: "添加成功"})
+                this.$refs.upConfigTable.initTableData();
             }
         }
     }

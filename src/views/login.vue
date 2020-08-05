@@ -85,10 +85,12 @@ export default {
                   language = res.data;
                   console.log(language);
                   localStorage.setItem(DEFAULT_LANGUAGE, language);
-                  this.$router.replace({name: "index"})
+                  // this.$router.replace({name: "index"})
+                  window.location.href = "/"
                   })
                 } else {
-                  this.$router.replace({name: "index"})
+                  // this.$router.replace({name: "index"})
+                  window.location.href = "/"
                 }
               })
           } else {
