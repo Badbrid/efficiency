@@ -1,15 +1,20 @@
 <template>
     <div class="fn-clear" >
-        <div class="logo">
-            <a href="/">
-                <img src="@/assets/logo.png" alt="test" width="60"/>
-            </a>
+        <div class="left-box">
+            <div class="logo">
+                <a href="/">
+                    <img src="@/assets/logo.png" alt="test" width="60"/>
+                </a>
+            </div>
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+                <el-menu-item v-for="(item,key) in menuList" :key="key" :index="item.route">
+                    {{item.name}}
+                </el-menu-item>
+            </el-menu>
         </div>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item v-for="(item,key) in menuList" :key="key" :index="item.route">
-                {{item.name}}
-            </el-menu-item>
-        </el-menu>
+        <div>
+            rewnci
+        </div>
     </div>
 </template>
 <script>
@@ -36,5 +41,11 @@ export default {
    }
 }
 </script>
-<style>
+<style lang="scss" scoped>
+.fn-clear {
+    justify-content: space-between;
+    .left-box {
+        display: flex;
+    }
+}
 </style>

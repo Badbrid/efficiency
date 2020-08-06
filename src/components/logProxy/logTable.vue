@@ -9,53 +9,53 @@
             prop="deviceId"
             label="设备Id"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="sourceUrl"
             label="接口地址"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="header"
             label="请求头"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="requestPlaintext"
             label="请求参数明文"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="requestCiphertext"
             label="请求参数密文"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="responsePlaintext"
             label="响应数据明文"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="responseCiphertext"
             label="响应数据密文"
             :show-overflow-tooltip="true"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="requestTime"
             label="请求时间"
-            width="180">
+            >
             </el-table-column>
             <el-table-column
             prop="responseTime"
             label="响应时间"
-            width="180">
+            >
             </el-table-column>
         </el-table>
         <tablePagination :change="initLogTable" :current-page.sync="currentPage" :page-size.sync="pageSize" :total="total"/>

@@ -1,22 +1,8 @@
 <template>
   <div class="log">
     <div class="heard">
-      <!-- <div class="block">
-        <el-date-picker
-          v-model="startData"
-          type="date"
-          placeholder="开始日期">
-        </el-date-picker>
-      </div>
-      <div class="block">
-        <el-date-picker
-          v-model="endData"
-          type="date"
-          placeholder="结束日期">
-        </el-date-picker>
-      </div> -->
       <div class="top">
-        <el-form :inline="true" :model="formInlog" class="demo-form-inline">
+        <el-form :inline="true" :model="formInlog" class="demo-form-inline" label-width="auto">
           <el-form-item >
             <el-date-picker v-model="formInlog.startDate" type="date"  placeholder="开始日期"></el-date-picker>
           </el-form-item>
