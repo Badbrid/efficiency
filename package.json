@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "bootstrap": "yarn &&yarn build",
     "serve": "vue-cli-service serve",
+    "test": "vue-cli-service build --mode test --report",
+    "report": "vue-cli-service build --mode production --report",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lint-fix": "eslint --fix --ext .js/.vue ./src"
   },
   "dependencies": {
     "axios": "^0.19.2",

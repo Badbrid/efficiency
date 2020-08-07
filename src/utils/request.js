@@ -4,6 +4,12 @@ import axios from 'axios';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+axios.defaults.headers = {
+	'Content-Type': 'application/json;charset=utf8'
+};
+
+// axios.defaults.baseURL = process.env.VUE_APP_API_SYS ? process.env.VUE_APP_API_SYS : '';
+
 // 添加一个请求拦截器
 axios.interceptors.request.use(
 	config => {

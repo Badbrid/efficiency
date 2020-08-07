@@ -39,7 +39,8 @@ export default {
     };
   },
   beforeCreate() {
-      this.$axios.get("/api/isLogin").then(response => {
+      console.log(process.env.VUE_APP_API_SYS+"/isLogin")
+      this.$axios.get(process.env.VUE_APP_API_SYS+"/isLogin").then(response => {
         if (!response.success) {
           this.ready = true;
         } else {
@@ -75,14 +76,14 @@ export default {
       submitForm(form) {
         this.$refs[form].validate((valid) => {
           if (valid) {
-            this.$axios.post("/api/signin",this.form
+            this.$axios.post(process.env.VUE_APP_API_SYS+"/signin",this.form
             ).then(res => {
               saveLocalStorage(res);
               let language = res.data.language;
               if (!language) {
                 this.$axios({
                   methods: 'get',
-                  url: '/api/language'
+                  url: process.env.VUE_APP_API_SYS+'/language'
                 }).then(res => {
                   language = res.data;
                   localStorage.setItem(DEFAULT_LANGUAGE, language);
