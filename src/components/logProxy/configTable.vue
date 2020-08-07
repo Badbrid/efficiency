@@ -1,6 +1,7 @@
 <template>
   <el-card class="table-card">
     <el-table border
+      @cell-dblclick="celldblclick"
       :data="tableData"
       style="width: 100%">
       <el-table-column
@@ -34,10 +35,12 @@
       </el-table-column>
       <el-table-column
         label="自定义请求参数"
+        :show-overflow-tooltip="true"
         prop="reqParams">
       </el-table-column>
       <el-table-column
         label="自定义响应结果"
+        :show-overflow-tooltip="true"
         prop="respResult">
       </el-table-column>
       <el-table-column
@@ -148,6 +151,22 @@
             }
           })
         },
+        //双击复制内容
+        celldblclick (row, column) {
+            this.$copyText(row[column.property]).then(e=> {
+                console.log(e)
+                this.onCopy()
+            }, function (e) {
+                console.log(e)
+                this.onError()
+            })
+        },
+        onCopy() {
+            this.$notify({title: '成功', message: '复制成功！', type: 'success', offset: 50, duration: 800})
+        },
+        onError() {
+            this.$notify({title: '失败', message: '复制失败！', type: 'error', offset: 50, duration: 800})
+        },
         monitoring() { // 监听事件
           this.$on('queryMethod', (res) => {
               this.formInline.sourceUrl = res.sourceUrl;
@@ -164,3 +183,6 @@
     },
   }
 </script>
+<style lang="sass" scoped>
+
+</style>

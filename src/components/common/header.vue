@@ -12,33 +12,37 @@
                 </el-menu-item>
             </el-menu>
         </div>
-        <div>
-            rewnci
+        <div class="avatar">
+            <header-user/>
         </div>
     </div>
 </template>
 <script>
+import HeaderUser from "./HeaderUser";
+
 export default {
+    components:{HeaderUser},
     name: "appHeader",
-   data() {
-      return {
+    data() {
+        return {
             activeIndex: "testProcess",
             menuList: [
                 {index: 1, name: "测试流程", route: "testProcess"},
                 {index: 2, name: "接口测试", route: "api"},
-                {index: 3, name: "日志代理", route: "logProxy"}
+                {index: 3, name: "日志代理", route: "logProxy"},
+                {index: 4, name: "系统设置", route: "systemSetting"}
             ]
         }
-   },
-   created() {
-       this.activeIndex = this.$route.matched[0].name;
-   },
-   methods: {
-       handleSelect(route){
-        //    this.activeIndex = route
-           this.$router.push({name: route})
-       }
-   }
+    },
+    created() {
+        this.activeIndex = this.$route.matched[0].name;
+    },
+    methods: {
+        handleSelect(route){
+            //    this.activeIndex = route
+            this.$router.push({name: route})
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -48,4 +52,9 @@ export default {
         display: flex;
     }
 }
+// .avatar {
+//     background-color: blue;
+//     width:60px;
+//     margin-left: 10px;
+// }
 </style>

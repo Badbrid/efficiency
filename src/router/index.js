@@ -8,6 +8,9 @@ import proxyConfiguration from '../components/logProxy/proxyConfiguration';
 import apiHome from '../components/api/home';
 //测试流程
 import testProcessName from '../components/testProcess/home';
+import lostPage from '../components/api/404';
+
+import Setting from '../components/system/Setting';
 
 Vue.use(VueRouter);
 
@@ -19,14 +22,6 @@ const router = new VueRouter({
 			path: '/',
 			redirect: '/logProxy'
 		},
-		// {
-		// 	path: '/login',
-		// 	name: 'login',
-		// 	// route level code-splitting
-		// 	// this generates a separate chunk (about.[hash].js) for this route
-		// 	// which is lazy-loaded when the route is visited.
-		// 	component: () => import(/* webpackChunkName: "about" */ '../views/login.vue')
-		// },
 		{
 			name: 'logProxy',
 			path: '/logProxy',
@@ -76,9 +71,17 @@ const router = new VueRouter({
 			]
 		},
 		{
+			path: '/setting',
+			name: 'systemSetting',
+			components: {
+				content: Setting
+			},
+			children: []
+		},
+		{
 			name: 'default_404',
 			path: '404',
-			component: testProcessName
+			component: lostPage
 		}
 	]
 	// scrollBehavior(to, from, savedPosition) {

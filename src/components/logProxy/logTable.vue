@@ -32,20 +32,26 @@
             <el-table-column
             prop="requestCiphertext"
             label="请求参数密文"
-            :show-overflow-tooltip="true"
             >
+            <template slot-scope="scope">
+                <span>{{scope.row.requestCiphertext | ellipsis}}</span>
+            </template>
             </el-table-column>
             <el-table-column
             prop="responsePlaintext"
             label="响应数据明文"
-            :show-overflow-tooltip="true"
             >
+            <template slot-scope="scope">
+                <span>{{scope.row.responsePlaintext | ellipsis2}}</span>
+            </template>
             </el-table-column>
             <el-table-column
             prop="responseCiphertext"
             label="响应数据密文"
-            :show-overflow-tooltip="true"
             >
+            <template slot-scope="scope">
+                <span>{{scope.row.responseCiphertext | ellipsis}}</span>
+            </template>
             </el-table-column>
             <el-table-column
             prop="requestTime"
@@ -67,6 +73,22 @@
     export default {
         components: {
             tablePagination
+        },
+        filters: {
+            ellipsis(value) {
+                if (!value) return "";
+                if (value.length > 20) {
+                return value.slice(0, 15) + "...";
+                }
+                return value;
+            },
+            ellipsis2(value) {
+                if (!value) return "";
+                if (value.length > 20) {
+                return value.slice(0, 20) + "...";
+                }
+                return value;
+            }
         },
         data() {
             return {
@@ -132,8 +154,8 @@
         }
     }
 </script>
-<style ang="scss">
-.el-tooltip__popper{max-width: 50%}
+<style lang="scss">
+.el-tooltip__popper{max-width: 80%;}
 .el-notification{
   position: fixed;
   top: 50% !important;

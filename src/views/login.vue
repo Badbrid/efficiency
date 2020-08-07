@@ -16,6 +16,7 @@
 </template>
 <script>
 import {DEFAULT_LANGUAGE} from '../utils/constants';
+import {saveLocalStorage} from "../utils/utils";
 
 export default {
   data() {
@@ -38,7 +39,7 @@ export default {
     };
   },
   beforeCreate() {
-      this.$get("/isLogin").then(response => {
+      this.$axios.get("/api/isLogin").then(response => {
         if (!response.success) {
           this.ready = true;
         } else {
@@ -76,6 +77,7 @@ export default {
           if (valid) {
             this.$axios.post("/api/signin",this.form
             ).then(res => {
+              saveLocalStorage(res);
               let language = res.data.language;
               if (!language) {
                 this.$axios({
@@ -83,9 +85,7 @@ export default {
                   url: '/api/language'
                 }).then(res => {
                   language = res.data;
-                  console.log(language);
                   localStorage.setItem(DEFAULT_LANGUAGE, language);
-                  // this.$router.replace({name: "index"})
                   window.location.href = "/"
                   })
                 } else {
