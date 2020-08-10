@@ -111,7 +111,7 @@
         },
         methods: {
             initLogTable() {
-                this.$axios.get('/auto/proxy/log/list',{
+                this.$axios.get(process.env.VUE_APP_API_LOG+'/proxy/log/list',{
                     params:{
                         pageNo: this.currentPage,
                         pageSize: this.pageSize,

@@ -20,17 +20,16 @@ export default {
     return {};
   }, 
   beforeCreate() {
-    this.$axios.get("/api/isLogin").then(res =>{
-      if(res.success){
-        // this.$setLang(res.data);
-      } else {
-        console.log(1111111)
-        window.location.href= '/login';
-      }
-    })
-    .catch(() =>{
-      window.location.href= '/login';
-    })
+    // this.$axios.get(process.env.VUE_APP_API_SYS+"/isLogin").then(res =>{
+    //   if(res.success){
+    //     // this.$setLang(res.data);
+    //   } else {
+    //     window.location.href= '/login';
+    //   }
+    // })
+    // .catch(() =>{
+    //   window.location.href= '/login';
+    // })
   }
 }
 </script>

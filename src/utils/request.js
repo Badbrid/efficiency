@@ -9,6 +9,7 @@ axios.defaults.headers = {
 };
 
 // axios.defaults.baseURL = process.env.VUE_APP_API_SYS ? process.env.VUE_APP_API_SYS : '';
+axios.defaults.withCredentials = true;
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(

@@ -126,7 +126,7 @@
         },
         handleDelete(index, row) {
           console.log(row.id);
-          this.$axios.delete("/auto/proxy/config/del",{
+          this.$axios.delete(process.env.VUE_APP_API_LOG+"/proxy/config/del",{
             params:{
               id : row.id,
             }}).then(res =>{
@@ -136,7 +136,7 @@
             })
         },
         initTableData(){
-          this.$axios.get("/auto/proxy/config/list",{
+          this.$axios.get(process.env.VUE_APP_API_LOG+"/proxy/config/list",{
             params:{
               pageNo : this.currentPage,
               pageSize : this.pageSize,

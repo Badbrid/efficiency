@@ -37,7 +37,7 @@ export default {
     name: "dialogN",
     data() {
       return {
-        createPath: '/auto/proxy/config/add',
+        createPath: process.env.VUE_APP_API_LOG+'/proxy/config/add',
         dialogFormVisible: true,
         form: {
           sourceUrl: '',

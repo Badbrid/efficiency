@@ -56,7 +56,7 @@
         this.$refs.upLogTable.updataLogTable(this.formInlog);
       },
       onClear() {
-        this.$axios.post("/auto/proxy/log/clear",this.formInlog).then(res =>{
+        this.$axios.post(process.env.VUE_APP_API_LOG+"/proxy/log/clear",this.formInlog).then(res =>{
           if(res.success){
             this.formInlog = {};
             this.$refs.upLogTable.updataLogTable(this.formInlog);
