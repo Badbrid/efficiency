@@ -35,7 +35,7 @@
             this.$router.push('/setting/personsetting').catch(error => error);
             break;
           case "logout":
-            this.$axios.get("/api/loginOut").then(res =>{
+            this.$axios.get(process.env.VUE_APP_API_SYS+"/loginOut").then(res =>{
               if(res.success){
                 localStorage.clear();
                 window.location.href = "/login";

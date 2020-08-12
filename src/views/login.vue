@@ -80,16 +80,14 @@ export default {
             ).then(res => {
               saveLocalStorage(res);
               let language = res.data.language;
-              alert(language)
               if (!language) {
                 this.$axios({
                   methods: 'get',
                   url: process.env.VUE_APP_API_SYS+'/language'
                 }).then(res => {
                   language = res.data;
-                  alert(language)
                   localStorage.setItem(DEFAULT_LANGUAGE, language);
-                  window.location.href = "/"
+                  // window.location.href = "/"
                   })
                 } else {
                   // this.$router.replace({name: "index"})

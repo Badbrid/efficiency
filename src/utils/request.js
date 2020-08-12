@@ -1,11 +1,13 @@
 import axios from 'axios';
+import { TokenKey } from './constants';
 
 // axios.defaults.baseURL = '/api';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 axios.defaults.headers = {
-	'Content-Type': 'application/json;charset=utf8'
+	'Content-Type': 'application/json;charset=utf8',
+	AUTHORIZATION: localStorage.getItem(TokenKey) || ''
 };
 
 // axios.defaults.baseURL = process.env.VUE_APP_API_SYS ? process.env.VUE_APP_API_SYS : '';
@@ -14,6 +16,7 @@ axios.defaults.withCredentials = true;
 // 添加一个请求拦截器
 axios.interceptors.request.use(
 	config => {
+		console.log(config);
 		return config;
 	},
 	err => {
