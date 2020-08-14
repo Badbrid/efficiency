@@ -15,7 +15,7 @@
 	</div>
 </template>
 <script>
-import { DEFAULT_LANGUAGE } from '../utils/constants';
+import { DEFAULT_LANGUAGE,TokenKey } from '../utils/constants';
 import { saveLocalStorage } from '../utils/utils';
 
 export default {
@@ -87,9 +87,9 @@ export default {
 								}).then(res => {
 									language = res.data;
 									localStorage.setItem(DEFAULT_LANGUAGE, language);
-									// window.location.href = "/"
+									window.location.href = "/"
 								});
-							}, 1000);
+							}, 1);
 						} else {
 							// this.$router.replace({name: "index"})
 							window.location.href = '/';
