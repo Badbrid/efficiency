@@ -37,14 +37,14 @@ export default {
 		};
 	},
 	beforeCreate() {
-		console.log(process.env.VUE_APP_API_SYS + '/isLogin');
-		this.$axios.get(process.env.VUE_APP_API_SYS + '/isLogin').then(response => {
-			if (!response.success) {
-				this.ready = true;
-			} else {
-				window.location.href = '/';
-			}
-		});
+		// console.log(process.env.VUE_APP_API_SYS + '/isLogin');
+		// this.$axios.get(process.env.VUE_APP_API_SYS + '/isLogin').then(response => {
+		// 	if (!response.success) {
+		// 		this.ready = true;
+		// 	} else {
+		// 		window.location.href = '/';
+		// 	}
+		// });
 	},
 	created() {
 		// this.$axios.get("/api/isLogin").then(res =>{
@@ -54,6 +54,15 @@ export default {
 		//     window.location.refs = "/"
 		//   }
 		// }),
+
+		// this.$axios.get(process.env.VUE_APP_API_SYS + '/isLogin').then(response => {
+		// 	if (!response.success) {
+		// 		this.ready = true;
+		// 	} else {
+		// 		window.location.href = '/';
+		// 	}
+		// });
+
 		document.addEventListener('keydown', this.watchEnter);
 	},
 	destroyed() {
