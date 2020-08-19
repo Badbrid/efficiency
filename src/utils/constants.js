@@ -1,5 +1,6 @@
 export const TokenKey = 'Admin-Token';
 export const DEFAULT_LANGUAGE = 'default_language';
+export const User = 'user';
 
 export const ROLE_ADMIN = 'admin';
 export const ROLE_ORG_ADMIN = 'org_admin';

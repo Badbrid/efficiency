@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" align="middle" class="current-user">
     <el-avatar shape="square" size="small" :src="squareUrl"/>
-    <span class="username">{{currentUser.name}}</span>
+    <span class="username">{{currentUser}}</span>
   </el-row>
 </template>
 
@@ -30,7 +30,8 @@
     },
     computed: {
       currentUser: () => {
-        return getCurrentUser();
+        let user = getCurrentUser();
+        return user.name;
       }
     }
   }

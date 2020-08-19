@@ -16,7 +16,6 @@ axios.defaults.withCredentials = true;
 // 添加一个请求拦截器
 axios.interceptors.request.use(
 	config => {
-		console.log(config);
 		return config;
 	},
 	err => {

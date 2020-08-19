@@ -9,9 +9,12 @@ import apiHome from '../components/api/home';
 //测试流程
 import testProcessName from '../components/testProcess/home';
 import lostPage from '../components/api/404';
+import PersonSetting from '../components/common/setting/personal/PersonSetting';
+
+import User from '../components/system/User';
 
 import Setting from '../components/system/Setting';
-
+import axios from 'axios';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -71,22 +74,47 @@ const router = new VueRouter({
 			]
 		},
 		{
-			path: '/setting',
+			path: '/systemSetting',
 			name: 'systemSetting',
-			components: {
-				content: Setting
-			},
-			children: []
+			redirect: '/systemSetting/personsetting',
+			component: Setting,
+			children: [
+				{
+					path: '/systemSetting/personsetting',
+					name: 'personsetting',
+					meta: { title: '系统管理', level: 1 },
+					component: PersonSetting
+				},
+				{
+					path: '/systemSetting/user',
+					component: User,
+					name: 'user',
+					meta: { title: '创建用户', level: 1 }
+				}
+			]
 		},
 		{
 			name: 'default_404',
-			path: '404',
+			path: '/404',
 			component: lostPage
 		}
 	]
 	// scrollBehavior(to, from, savedPosition) {
 	// 	return { x: 0, y: 0 };
 	// }
+});
+
+router.beforeEach((to, from, next) => {
+	//解决localStorage清空，cookie没失效导致的卡死问题
+	if (!localStorage.getItem('Admin-Token')) {
+		axios.get(process.env.VUE_APP_API_SYS + '/loginOut');
+		console.log('signout');
+		localStorage.setItem('Admin-Token', '{}');
+		window.location.href = '/login.html';
+		next();
+	} else {
+		next();
+	}
 });
 
 export default router;

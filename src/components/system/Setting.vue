@@ -1,6 +1,5 @@
 <template>
   <effic-container>
-
     <effic-aside-container>
       <current-user/>
       <el-divider/>

@@ -5,7 +5,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
 import axios from './utils/request';
+import icon from './utils/icon';
 import VueClipboard from 'vue-clipboard2';
+import { permission, roles } from './utils/permission';
 // 全局组件
 import { NewDialog } from './components/common/dialog/index.js';
 Vue.config.productionTip = false;
@@ -15,7 +17,15 @@ Vue.prototype.$axios = axios;
 
 Vue.use(NewDialog);
 
+Vue.use(icon);
+
 Vue.use(VueClipboard);
+
+// v-permission
+Vue.directive('permission', permission);
+
+// v-roles
+Vue.directive('roles', roles);
 
 new Vue({
 	router,

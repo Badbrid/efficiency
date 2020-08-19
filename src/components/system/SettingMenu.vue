@@ -1,99 +1,58 @@
 <template>
-  <el-row class="tac">
-  <el-col :span="12">
-    <h5>默认颜色</h5>
-    <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose">
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
-    </el-menu>
-  </el-col>
-  <el-col :span="12">
-    <h5>自定义颜色</h5>
-    <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
-    </el-menu>
-  </el-col>
-</el-row>
+  <el-menu menu-trigger="click" :default-active="$route.path" router>
+    <el-submenu index="1" v-permission="['admin']">
+      <template v-slot:title>
+        <font-awesome-icon class="icon account" :icon="['far', 'address-card']" size="lg"/>
+        <span>系统</span>
+      </template>
+      <el-menu-item index="/systemSetting/user">用户管理</el-menu-item>
+    </el-submenu>
+    <el-submenu index="4">
+      <template v-slot:title>
+        <font-awesome-icon class="icon" :icon="['far', 'user']" size="lg"/>
+        <span>个人信息</span>
+      </template>
+      <el-menu-item index="/systemSetting/personsetting">个人设置</el-menu-item>
+    </el-submenu>
+
+  </el-menu>
 </template>
 
 <script>
+
   export default {
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
-    }
+    name: "MsSettingMenu",
+    
+    mounted() {
+
+    },
   }
 </script>
 
+<style scoped>
+  .el-menu {
+    border-right: 0;
+  }
+
+  .el-menu-item {
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .icon {
+    width: 24px;
+    margin-right: 10px;
+  }
+
+  .account {
+    color: #5a78f0;
+  }
+
+  .organization {
+    color: #b33a5b;
+  }
+
+  .workspace {
+    color: #44b349;
+  }
+</style>
