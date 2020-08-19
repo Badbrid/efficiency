@@ -24,11 +24,11 @@ export default {
       if(res.success){
         // this.$setLang(res.data);
       } else {
-        window.location.href= '/login';
+        window.location.href= '/login.html';
       }
     })
     .catch(() =>{
-      window.location.href= '/login';
+      window.location.href= '/login.html';
     })
   }
 }
