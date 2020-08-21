@@ -32,7 +32,7 @@
         switch (command) {
           case "personal":
             // TODO 优化路由跳转，避免重复添加路由
-            this.$router.push('/setting/personsetting').catch(error => error);
+            this.$router.push('/systemSetting/personsetting').catch(error => error);
             break;
           case "logout":
             this.$axios.get(process.env.VUE_APP_API_SYS+"/loginOut").then(res =>{

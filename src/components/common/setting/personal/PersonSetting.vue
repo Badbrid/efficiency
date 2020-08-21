@@ -1,11 +1,11 @@
 <template>
     <div >
-        <el-card class="table-card">
+        <el-card class="table-card" >
             <template v-slot:header>
                 <div>
-                <el-row type="flex" just ify="space-between" align="middle">
-                    <span class="title">个人信息</span>
-                </el-row>
+                    <el-row type="flex" justify="space-between" align="middle">
+                        <span class="title">个人信息</span>
+                    </el-row>
                 </div>
             </template>
 
@@ -16,14 +16,17 @@
                 <el-table-column prop="email" label="邮箱"/>
                 <el-table-column prop="phone" label="电话"/>
                 <el-table-column prop="createTime" label="创建时间">
+                    <template v-slot:default="scope">
+                        <span>{{ scope.row.createTime | timestampFormatDate }}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column label="操作">
-                <template v-slot:default="scope">
-                    <effic-table-operator-button tip="编辑信息" icon="el-icon-edit"
-                                            type="primary" @exec="edit(scope.row)"/>
-                    <effic-table-operator-button tip="修改密码" icon="el-icon-s-tools"
-                                            type="success" @exec="editPassword(scope.row)"/>
-                </template>
+                    <template v-slot:default="scope">
+                        <effic-table-operator-button tip="编辑信息" icon="el-icon-edit"
+                                                type="primary" @exec="edit(scope.row)"/>
+                        <effic-table-operator-button tip="修改密码" icon="el-icon-s-tools"
+                                                type="success" @exec="editPassword(scope.row)"/>
+                    </template>
                 </el-table-column>
             </el-table>
         </el-card>

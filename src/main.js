@@ -5,6 +5,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
 import axios from './utils/request';
+import filters from './utils/filter';
 import icon from './utils/icon';
 import VueClipboard from 'vue-clipboard2';
 import { permission, roles } from './utils/permission';
@@ -16,6 +17,8 @@ Vue.use(ElementUI);
 Vue.prototype.$axios = axios;
 
 Vue.use(NewDialog);
+
+Vue.use(filters);
 
 Vue.use(icon);
 

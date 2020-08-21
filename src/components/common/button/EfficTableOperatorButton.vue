@@ -28,7 +28,8 @@ export default {
             default: 'primary'
         },
         tip: {
-            type: String
+            type: String,
+            default: ''
         },
         disabled: {
             type: Boolean,

@@ -1,7 +1,7 @@
 <template>
-  <el-main class="effic-main-container">
+  <div class="effic-main-container">
     <slot></slot>
-  </el-main>
+  </div>
 </template>
 
 <script>
@@ -14,6 +14,7 @@
 
   .effic-main-container {
     padding: 15px;
+    width: 100%;
     height: calc(100vh - 80px);
   }
 

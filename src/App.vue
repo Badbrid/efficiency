@@ -1,5 +1,5 @@
 <template>
-  <div class="app fn-clear">
+  <el-container>
     <el-header height="61px">
       <app-header class="app-header"/>
     </el-header>
@@ -9,7 +9,7 @@
         <p>Copyright © test.</p>
       </el-footer>
     </el-main>
-  </div>
+  </el-container>
 </template>
 
 <script>
@@ -35,6 +35,10 @@ export default {
 </script>
 
 <style lang="scss" scope>
+body > .el-container {
+    margin-bottom: 40px;
+}
+
 .app{
   overflow: hidden;
   height:100%;

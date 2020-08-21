@@ -89,7 +89,7 @@ const router = new VueRouter({
 					path: '/systemSetting/user',
 					component: User,
 					name: 'user',
-					meta: { title: '创建用户', level: 1 }
+					meta: { title: '用户管理', level: 1 }
 				}
 			]
 		},
