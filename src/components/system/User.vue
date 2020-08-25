@@ -99,14 +99,14 @@
                 <el-form-item label="电话" prop="phone">
                     <el-input v-model="form.phone" autocomplete="off" placeholder="请输入电话号码"/>
                 </el-form-item>
-                <div v-for="(role, index) in form.role" :key="index">
+                <!-- <div v-for="(rol, index) in form.role" :key="index"> -->
                     <el-form-item label="角色" prop="role"
                         :rules="{
                         required: true,
                         message: '请选择角色',
                         trigger: 'change'
                         }">
-                        <el-select v-model="role.name" placeholder="请选择角色" @focus="getRoleList()">
+                        <el-select v-model="form.role.id" placeholder="请选择角色" @focus="getRoleList()">
                             <el-option
                                 v-for="item in userRole"
                                 :key="item.id"
@@ -115,7 +115,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                </div>
+                <!-- </div> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="close('updateUserForm')">取消</el-button>
@@ -182,9 +182,10 @@ export default {
                 phone:"",
                 password:"",
                 roles: "",
-                role: [{
-                    id: ''
-                }]
+                role: {
+                    id: '',
+                    name: ''
+                }
             },
             ruleForm: {},
             rule: {
@@ -244,8 +245,8 @@ export default {
             let url = "/user/user/role";
             this.$axios.get(process.env.VUE_APP_API_SYS+url + "/" + row.id).then(res =>{
                 let data = res.data;
-                let roles = data.roles;
-                this.form.roles = roles;
+                let roles = data.roles[0];
+                this.form.role = roles;
             });
         },
         editPassword(row) {
