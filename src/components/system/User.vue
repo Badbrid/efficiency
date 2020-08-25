@@ -46,7 +46,7 @@
         </el-card>
 
         <!--Create user-->
-        <el-dialog title="创建用户" :visible.sync="createVisible" width="35%" @closed="handleClose"
+        <el-dialog title="创建用户" :visible.sync="createVisible" width="35%" @closed="handleClose('form')"
                 :destroy-on-close="true">
             <el-form :model="form" label-position="right" label-width="120px" size="small" :rules="rule" ref="createUserForm">
                 <el-form-item label="ID" prop="id">
@@ -65,10 +65,11 @@
                 <el-input v-model="form.password" autocomplete="new-password" show-password
                             placeholder="请输入密码"/>
                 </el-form-item>
-                <el-form-item label="角色" :label-width="formLabelWidth" prop="roles">
-                    <el-select v-model="form.roles" placeholder="请选择角色">
+                <el-form-item label="角色" :label-width="formLabelWidth" prop="roles" 
+                    :rules="{required: true, message: '请选择角色', trigger: 'change'}">
+                    <el-select v-model="form.roles" placeholder="请选择角色" >
                         <el-option
-                            v-for="item in form.roles"
+                            v-for="item in userRole"
                             :key="item.id"
                             :label="item.name"
                             :value="item.id">
@@ -79,6 +80,72 @@
             <div slot="footer" class="dialog-footer">
                 <el-button @click="createVisible = false">取消</el-button>
                 <el-button type="primary" @click="createConfig('createUserForm')">确定</el-button>
+            </div>
+        </el-dialog>
+
+        <!--Modify user-->
+        <el-dialog title="修改用户" :visible.sync="updateVisible" width="35%" @closed="handleClose('form')"
+                :destroy-on-close="true">
+            <el-form :model="form" label-position="right" label-width="120px" size="small" :rules="rule" ref="updateUserForm">
+                <el-form-item label="ID" prop="id">
+                    <el-input v-model="form.id" autocomplete="off" placeholder="请输入ID (只支持数字、英文字母)"/>
+                </el-form-item>
+                <el-form-item label="姓名" prop="name">
+                    <el-input v-model="form.name" autocomplete="off" placeholder="请输入用户姓名"/>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="form.email" autocomplete="off" placeholder="请输入邮箱"/>
+                </el-form-item>
+                <el-form-item label="电话" prop="phone">
+                    <el-input v-model="form.phone" autocomplete="off" placeholder="请输入电话号码"/>
+                </el-form-item>
+                <div v-for="(role, index) in form.role" :key="index">
+                    <el-form-item label="角色" prop="role"
+                        :rules="{
+                        required: true,
+                        message: '请选择角色',
+                        trigger: 'change'
+                        }">
+                        <el-select v-model="role.name" placeholder="请选择角色" @focus="getRoleList()">
+                            <el-option
+                                v-for="item in userRole"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </div>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="close('updateUserForm')">取消</el-button>
+                <el-button type="primary" @click="updateUser('updateUserForm')">确定</el-button>
+            </div>
+        </el-dialog>
+
+        <!--Changing user password in system settings-->
+        <el-dialog title="修改密码" :visible.sync="editPasswordVisible" width="30%" left>
+            <el-form :model="ruleForm" label-position="right" label-width="120px" size="small" :rules="rule"
+                    ref="editPasswordForm" class="demo-ruleForm">
+                <el-form-item label="新密码" prop="newpassword"
+                    :rules="[
+                        {required: true, message: '请输入新密码', trigger: 'blur'},
+                        {
+                            required: true,
+                            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/,
+                            message: '有效密码：8-16位，英文大小写字母+数字+特殊字符（可选）',
+                            trigger: 'blur'
+                        }
+                    ]">
+                    <el-input type="password" v-model="ruleForm.newpassword" autocomplete="off" show-password></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="ruleForm.id" autocomplete="off" :disabled="true" style="display:none"/>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="editPasswordVisible = false">取消</el-button>
+                <el-button type="primary" @click="editUserPassword('editPasswordForm')">确定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -94,6 +161,9 @@ export default {
         return {
             queryPath: '/user/all/list',
             rolePath: '/user/role/list',
+            createUserPath: '/user/add',
+            deletePath: '/user/deleteUser',
+            editPasswordPath: '/user/editPassword',
             currentPage: 1,
             pageSize: 10,
             total: 1,
@@ -101,18 +171,24 @@ export default {
             tableData: [],
             condition: "",
             createVisible: false,
+            updateVisible: false,
+            editPasswordVisible: false,
             formLabelWidth: '120px',
+            userRole: [],
             form: {
                 id:"",
                 name:"",
                 email:"",
                 phone:"",
                 password:"",
-                roles: [{
-                    id: "",
-                    name:"",
-                }]
+                roles: "",
+                role: [
+                    {
+                        id: ""
+                    }
+                ]
             },
+            ruleForm: {},
             rule: {
                 id: [
                     {required: true, message: '请输入ID', trigger: 'blur'},
@@ -165,39 +241,113 @@ export default {
     },
     methods: {
         edit(row) {
-            
+            this.updateVisible = true;
+            this.form = Object.assign({},row);
+            this.form.role = row.roles;
+            console.log(this.form.role)
         },
         editPassword(row) {
-            
+            this.editPasswordVisible = true;
+            this.ruleForm = Object.assign({},row);
+        },
+        editUserPassword(editPasswordForm){
+            this.$refs[editPasswordForm].validate((valid) =>{
+                if(valid){
+                    this.$axios.post(process.env.VUE_APP_API_SYS+this.editPasswordPath,this.ruleForm).then(res =>{
+                        if(res.success){
+                            this.$success('修改成功');
+                            this.search();
+                            this.editPasswordVisible = false;
+                            this.$refs[editPasswordForm].resetFields();
+                        }
+                    })
+                }
+           });
         },
         del(row) {
-            
+            this.$confirm('确定要删除吗?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$axios.delete(process.env.VUE_APP_API_SYS+this.deletePath,{
+                    params:{
+                        id : row.id,
+                    }
+                }).then((res) =>{
+                    if(res.success){
+                        this.$success('删除成功');
+                        this.search();
+                    }
+                })
+            }).catch(() => {
+                this.$info('已取消删除');
+            });
         },
         search() { 
             this.$axios.post(process.env.VUE_APP_API_SYS+this.queryPath+'/'+this.currentPage+'/'+this.pageSize+'/'+this.condition).then(res =>{
-                    if(res.success){
-                        this.tableData = res.data.list;
-                        this.total = res.data.total;
-                        this.pageNo = res.data.pageNo;
+                if(res.success){
+                    this.tableData = res.data.list;
+                    this.total = res.data.total;
+                    this.pageNo = res.data.pageNo;
+                    let url = "/user/user/role";
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        this.$axios.get(process.env.VUE_APP_API_SYS+url + "/" + this.tableData[i].id).then(res =>{
+                            let data = res.data;
+                            let roles = data.roles;
+                            // let userRoles = result.userRoles;
+                            this.$set(this.tableData[i], "roles", roles);
+                        });
                     }
-                })
+                }
+            })
         },
         create() {
             this.createVisible = true;
+            this.getRoleList();
+        },
+        getRoleList(){
             this.$axios.get(process.env.VUE_APP_API_SYS+this.rolePath).then(res =>{
-                console.log(res.data)
-                this.form.roles = res.data;
+                this.userRole = res.data;
             })
         },
-        handleClose() {
-            
+        close(updateUserForm){
+            this.$refs[updateUserForm].resetFields();//清空表单
+            console.log(updateUserForm.role)
+            this.updateVisible = false;
+        },
+        handleClose(form) {
         },
         createConfig(createUserForm) {
             this.$refs[createUserForm].validate((valid) =>{
                if(valid){
-                   
+                   this.$axios.post(process.env.VUE_APP_API_SYS+this.createUserPath,this.form).then(res =>{
+                       if(res.success){
+                           this.search();
+                           this.createVisible = false;
+                       }
+                   })
                }
            });
+        },
+        activeRole(roleInfo) {
+            return this.userRole.filter(function(role) {
+                console.log(roleInfo)
+                console.log(role)
+                let value = true;
+                if (!roleInfo.selects) {
+                return true;
+                }
+                if (roleInfo.selects.length === 0) {
+                value = true;
+                }
+                for (let i = 0; i < roleInfo.selects.length; i++) {
+                if (role.id === roleInfo.selects[i]) {
+                    value = false;
+                }
+                }
+                return value;
+            });
         }
     },
     activated() {

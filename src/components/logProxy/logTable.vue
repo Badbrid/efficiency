@@ -28,10 +28,14 @@
             label="请求参数明文"
             :show-overflow-tooltip="true"
             >
+            <template slot-scope="scope">
+                <span>{{scope.row.requestPlaintext | ellipsis3}}</span>
+            </template>
             </el-table-column>
             <el-table-column
             prop="requestCiphertext"
             label="请求参数密文"
+            :show-overflow-tooltip="true"
             >
             <template slot-scope="scope">
                 <span>{{scope.row.requestCiphertext | ellipsis}}</span>
@@ -40,6 +44,7 @@
             <el-table-column
             prop="responsePlaintext"
             label="响应数据明文"
+            :show-overflow-tooltip="true"
             >
             <template slot-scope="scope">
                 <span>{{scope.row.responsePlaintext | ellipsis2}}</span>
@@ -48,6 +53,7 @@
             <el-table-column
             prop="responseCiphertext"
             label="响应数据密文"
+            :show-overflow-tooltip="true"
             >
             <template slot-scope="scope">
                 <span>{{scope.row.responseCiphertext | ellipsis}}</span>
@@ -77,15 +83,22 @@
         filters: {
             ellipsis(value) {
                 if (!value) return "";
-                if (value.length > 20) {
-                return value.slice(0, 15) + "...";
+                if (value.length > 4000) {
+                return value.slice(0, 4000) + "...";
                 }
                 return value;
             },
             ellipsis2(value) {
                 if (!value) return "";
-                if (value.length > 20) {
-                return value.slice(0, 20) + "...";
+                if (value.length > 4000) {
+                return value.slice(0, 4000) + "...";
+                }
+                return value;
+            },
+            ellipsis3(value) {
+                if (!value) return "";
+                if (value.length > 4000) {
+                return value.slice(0, 4000) + "...";
                 }
                 return value;
             }
