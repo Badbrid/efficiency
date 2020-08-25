@@ -46,7 +46,7 @@
         </el-card>
 
         <!--Create user-->
-        <el-dialog title="创建用户" :visible.sync="createVisible" width="35%" @closed="handleClose('form')"
+        <el-dialog title="创建用户" :visible.sync="createVisible" width="35%" @closed="handleClose"
                 :destroy-on-close="true">
             <el-form :model="form" label-position="right" label-width="120px" size="small" :rules="rule" ref="createUserForm">
                 <el-form-item label="ID" prop="id">
@@ -84,7 +84,7 @@
         </el-dialog>
 
         <!--Modify user-->
-        <el-dialog title="修改用户" :visible.sync="updateVisible" width="35%" @closed="handleClose('form')"
+        <el-dialog title="修改用户" :visible.sync="updateVisible" width="35%" @closed="handleClose"
                 :destroy-on-close="true">
             <el-form :model="form" label-position="right" label-width="120px" size="small" :rules="rule" ref="updateUserForm">
                 <el-form-item label="ID" prop="id">
@@ -182,11 +182,9 @@ export default {
                 phone:"",
                 password:"",
                 roles: "",
-                role: [
-                    {
-                        id: ""
-                    }
-                ]
+                role: [{
+                    id: ''
+                }]
             },
             ruleForm: {},
             rule: {
@@ -243,8 +241,12 @@ export default {
         edit(row) {
             this.updateVisible = true;
             this.form = Object.assign({},row);
-            this.form.role = row.roles;
-            console.log(this.form.role)
+            let url = "/user/user/role";
+            this.$axios.get(process.env.VUE_APP_API_SYS+url + "/" + row.id).then(res =>{
+                let data = res.data;
+                let roles = data.roles;
+                this.form.roles = roles;
+            });
         },
         editPassword(row) {
             this.editPasswordVisible = true;
@@ -296,7 +298,7 @@ export default {
                             let data = res.data;
                             let roles = data.roles;
                             // let userRoles = result.userRoles;
-                            this.$set(this.tableData[i], "roles", roles);
+                            this.$set(this.tableData[i], "role", roles);
                         });
                     }
                 }
@@ -304,6 +306,11 @@ export default {
         },
         create() {
             this.createVisible = true;
+            try {
+                    this.$refs['form'].resetFields()
+                } catch (error) {
+                    
+                }
             this.getRoleList();
         },
         getRoleList(){
@@ -312,11 +319,10 @@ export default {
             })
         },
         close(updateUserForm){
-            this.$refs[updateUserForm].resetFields();//清空表单
-            console.log(updateUserForm.role)
             this.updateVisible = false;
         },
-        handleClose(form) {
+        handleClose() {
+            this.form = {role: [{id: ''}]};
         },
         createConfig(createUserForm) {
             this.$refs[createUserForm].validate((valid) =>{
