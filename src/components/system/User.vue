@@ -88,7 +88,7 @@
                 :destroy-on-close="true">
             <el-form :model="form" label-position="right" label-width="120px" size="small" :rules="rule" ref="updateUserForm">
                 <el-form-item label="ID" prop="id">
-                    <el-input v-model="form.id" autocomplete="off" placeholder="请输入ID (只支持数字、英文字母)"/>
+                    <el-input v-model="form.id" autocomplete="off" placeholder="请输入ID (只支持数字、英文字母)" :disabled="true"/>
                 </el-form-item>
                 <el-form-item label="姓名" prop="name">
                     <el-input v-model="form.name" autocomplete="off" placeholder="请输入用户姓名"/>
@@ -162,6 +162,7 @@ export default {
             queryPath: '/user/all/list',
             rolePath: '/user/role/list',
             createUserPath: '/user/add',
+            updateUserPath: '/user/update',
             deletePath: '/user/deleteUser',
             editPasswordPath: '/user/editPassword',
             currentPage: 1,
@@ -355,6 +356,21 @@ export default {
                 }
                 return value;
             });
+        },
+        updateUser(updateUserForm){
+            this.form.roles = this.form.role.id;
+            console.log(this.form.roles)
+            this.$refs[updateUserForm].validate((valid) =>{
+               if(valid){
+                   this.$axios.post(process.env.VUE_APP_API_SYS+this.updateUserPath,this.form).then(res =>{
+                       if(res.success){
+                           this.$success('修改用户信息成功');
+                           this.search();
+                           this.updateVisible = false;
+                       }
+                   })
+               }
+           });
         }
     },
     activated() {

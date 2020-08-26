@@ -56,7 +56,7 @@ export default {
     },
     methods: {
         search() {
-            this.$emit('update:condition', this.condition);
+            this.$emit('condition', this.condition);
             this.$emit('search');
         },
         create() {

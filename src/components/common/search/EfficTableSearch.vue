@@ -7,7 +7,7 @@
         prefix-icon="el-icon-search"
         @change="search"
         maxlength="60"
-        v-model="condition.name" clearable/>
+        v-model="condition" clearable/>
 </template>
 <script>
 export default {
@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         search() {
-            this.$emit('update:condition', this.condition);
+            this.$emit('condition', this.condition);
             this.$emit('change');
         }
     },

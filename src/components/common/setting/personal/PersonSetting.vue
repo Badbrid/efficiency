@@ -56,6 +56,30 @@
                     <el-button type="primary" @click="editUserPassword('editPasswordForm')">确定</el-button>
                 </div>
             </el-dialog>
+
+            <!--Modify personal details-->
+            <el-dialog title="编辑个人信息" :visible.sync="updateVisible" width="30%"
+                    :destroy-on-close="true" @close="handleClose">
+                <el-form :model="form" label-position="right" label-width="100px" size="small" :rules="rule"
+                        ref="updateUserForm">
+                    <el-form-item label="ID" prop="id">
+                        <el-input v-model="form.id" autocomplete="off" :disabled="true"/>
+                    </el-form-item>
+                    <el-form-item label="姓名" prop="name">
+                        <el-input v-model="form.name" autocomplete="off"/>
+                    </el-form-item>
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="form.email" autocomplete="off"/>
+                    </el-form-item>
+                    <el-form-item label="电话" prop="phone">
+                        <el-input v-model="form.phone" autocomplete="off"/>
+                    </el-form-item>
+                </el-form>
+                <template v-slot:footer>
+                    <el-button @click="closeDialog('updateUserForm')">取消</el-button>
+                    <el-button type="primary" @click="updateUser('updateUserForm')">确定</el-button>
+                </template>
+            </el-dialog>
         </el-card>
     </div>
 </template>
@@ -67,9 +91,41 @@ export default {
     data() {
         return {
             updatePasswordPath: '/user/update/password',
+            updatePersonal: '/user/update/personal',
             tableData: [],
             editPasswordVisible : false,
-            ruleForm: {}
+            ruleForm: {},
+            form:{},
+            updateVisible: false,
+            rule: {
+                name: [
+                    {required: true, message: '请输入用户姓名', trigger: 'blur'},
+                    {min: 2, max: 10, message: '长度在 {2} 到 {50} 个字符', trigger: 'blur'},
+                        {
+                        required: true,
+                        pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9.·-]+$/,
+                        message: '格式错误(不支持特殊字符，且不能以\'-\'开头结尾)',
+                        trigger: 'blur'
+                        }
+                ],
+                phone: [
+                    {
+                    required: false,
+                    pattern: '^1(3|4|5|7|8)\\d{9}$',
+                    message: '手机号码格式不正确',
+                    trigger: 'blur'
+                    }
+                ],
+                email: [
+                    {required: true, message: '请输入邮箱', trigger: 'blur'},
+                        {
+                        required: true,
+                        pattern: /^([A-Za-z0-9_\-.])+@([A-Za-z0-9]+\.)+[A-Za-z]{2,6}$/,
+                        message: '邮箱格式不正确',
+                        trigger: 'blur'
+                        }
+                ],
+            }
         }
     },
     activated() {
@@ -88,10 +144,32 @@ export default {
             return getCurrentUser();
         },
         edit(row) {
-            
+            this.updateVisible = true;
+            this.form = row;
         },
         editPassword(row) {
             this.editPasswordVisible = true;
+        },
+        closeDialog(updateUserForm){
+            this.updateVisible = false;
+            this.$refs[updateUserForm].resetFields();
+        },
+        handleClose(){
+
+        },
+        updateUser(updateUserForm){
+            this.$refs[updateUserForm].validate((valid) =>{
+                if(valid){
+                    this.$axios.post(process.env.VUE_APP_API_SYS+this.updatePersonal,this.form).then(res =>{
+                        if(res.success){
+                            this.$success('修改个人信息成功');
+                            this.updateVisible = false;
+                            this.initTableData();
+                            this.$refs[updateUserForm].resetFields();
+                        }
+                    })
+                }
+            })
         },
         editUserPassword(editPasswordForm){
             this.$refs[editPasswordForm].validate((valid) =>{
