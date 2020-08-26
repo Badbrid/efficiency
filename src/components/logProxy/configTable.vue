@@ -125,15 +125,22 @@
           )
         },
         handleDelete(index, row) {
-          console.log(row.id);
-          this.$axios.delete(process.env.VUE_APP_API_LOG+"/proxy/config/del",{
-            params:{
-              id : row.id,
-            }}).then(res =>{
-              if(res.success){
-                this.initTableData();
-              }
-            })
+          this.$confirm('确定要删除吗?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$axios.delete(process.env.VUE_APP_API_LOG+"/proxy/config/del",{
+                  params:{
+                    id : row.id,
+                  }}).then(res =>{
+                    if(res.success){
+                      this.initTableData();
+                    }
+                  })
+               }).catch(() => {
+                this.$info('已取消删除');
+            });   
         },
         initTableData(){
           this.$axios.get(process.env.VUE_APP_API_LOG+"/proxy/config/list",{

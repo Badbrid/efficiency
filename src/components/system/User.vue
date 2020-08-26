@@ -165,6 +165,7 @@ export default {
             updateUserPath: '/user/update',
             deletePath: '/user/deleteUser',
             editPasswordPath: '/user/editPassword',
+            updateStatusPath: '/user/update/status',
             currentPage: 1,
             pageSize: 10,
             total: 1,
@@ -316,6 +317,14 @@ export default {
                     
                 }
             this.getRoleList();
+        },
+        changeSwitch(row) {
+            console.log(row)
+            this.$axios.post(process.env.VUE_APP_API_SYS+this.updateStatusPath,row).then(res =>{
+                if(res.success){
+                    this.$success('修改状态成功');
+                }
+            })
         },
         getRoleList(){
             this.$axios.get(process.env.VUE_APP_API_SYS+this.rolePath).then(res =>{

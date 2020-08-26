@@ -6,9 +6,24 @@
                     <img src="@/assets/logo.png" alt="test" width="60"/>
                 </a>
             </div>
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-menu-item v-for="(item,key) in menuList" :key="key" :index="item.route">
-                    {{item.name}}
+            <el-menu mode="horizontal" menu-trigger="click"
+                class="el-menu-demo"
+                :default-active="activeIndex"
+                @select="handleSelect"
+                router>
+
+                <el-menu-item index="/testProcess" v-permission="['admin']">
+                    测试流程
+                </el-menu-item>
+                <el-menu-item index="/api" v-permission="['admin']">
+                    接口测试
+                </el-menu-item>
+                <el-menu-item index="/logProxy" onselectstart="return false"
+                            v-permission="['admin']">
+                    日志代理
+                </el-menu-item>
+                <el-menu-item index="/systemSetting" onselectstart="return false">
+                    系统设置
                 </el-menu-item>
             </el-menu>
         </div>
@@ -25,22 +40,27 @@ export default {
     name: "appHeader",
     data() {
         return {
-            activeIndex: "testProcess",
-            menuList: [
-                {index: 1, name: "测试流程", route: "testProcess"},
-                {index: 2, name: "接口测试", route: "api"},
-                {index: 3, name: "日志代理", route: "logProxy"},
-                {index: 4, name: "系统设置", route: "systemSetting"}
-            ]
+            activeIndex: '/'
         }
     },
     created() {
-        this.activeIndex = this.$route.matched[0].name;
+    },
+    watch: {
+        '$route'(to) {
+            if (to.matched.length > 0) {
+            this.activeIndex = to.matched[0].path;
+            }
+            this.handleSelect(this.activeIndex);
+        }
+    },
+    mounted() {
+        if (this.$route.matched.length > 0) {
+            this.activeIndex = this.$route.matched[0].path;
+        }
     },
     methods: {
-        handleSelect(route){
-            //    this.activeIndex = route
-            this.$router.push({name: route})
+        handleSelect(index) {
+            this.activeIndex = index
         }
     }
 }
