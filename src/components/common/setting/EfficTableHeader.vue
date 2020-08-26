@@ -11,7 +11,7 @@
                 <slot name="button"></slot>
             </span>
             <span>
-                <effic-table-search :condition.sync="condition" @change="search"/>
+                <effic-table-search :condition.sync="condition" @search="search"/>
             </span>
         </el-row>
     </div>
@@ -55,9 +55,9 @@ export default {
         }
     },
     methods: {
-        search() {
-            this.$emit('condition', this.condition);
-            this.$emit('search');
+        search(val) {
+            // this.$emit('condition', this.condition);
+            this.$emit('search', val);
         },
         create() {
             this.$emit('create');

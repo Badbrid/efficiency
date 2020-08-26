@@ -7,13 +7,14 @@
         prefix-icon="el-icon-search"
         @change="search"
         maxlength="60"
-        v-model="condition" clearable/>
+        v-model="searchValue" clearable/>
 </template>
 <script>
 export default {
     name: "EfficTableSearch",
     data() {
         return {
+            searchValue: ""
         }
     },
     props: {
@@ -24,10 +25,13 @@ export default {
             }
         }
     },
+    mounted() {
+        this.searchValue = this.condition;
+    },
     methods: {
         search() {
-            this.$emit('condition', this.condition);
-            this.$emit('change');
+            // this.$emit('condition', this.condition);
+            this.$emit('search',this.searchValue);
         }
     },
     activated() {

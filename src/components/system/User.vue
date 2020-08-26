@@ -288,8 +288,10 @@ export default {
                 this.$info('已取消删除');
             });
         },
-        search() { 
-            this.$axios.post(process.env.VUE_APP_API_SYS+this.queryPath+'/'+this.currentPage+'/'+this.pageSize+'/'+this.condition).then(res =>{
+        search(val) {
+            console.log(val)
+            let searchVal = val || "";
+            this.$axios.post(process.env.VUE_APP_API_SYS+this.queryPath+'/'+this.currentPage+'/'+this.pageSize+'/'+searchVal).then(res =>{
                 if(res.success){
                     this.tableData = res.data.list;
                     this.total = res.data.total;
