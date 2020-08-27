@@ -40,7 +40,9 @@ export function hasRolePermission(role) {
 		if (role === ur.roleId) {
 			if (ur.roleId === ROLE_ADMIN) {
 				return true;
-			} else if (ur.roleId === ROLE_TEST_MANAGER) {
+			} else if (ur.roleId === ROLE_TEST_USER) {
+				return true;
+			} else if (ur.roleId === ROLE_TEST_VIEWER) {
 				return true;
 			}
 		}

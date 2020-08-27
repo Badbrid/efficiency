@@ -19,12 +19,13 @@
                     接口测试
                 </el-menu-item>
                 <el-menu-item index="/logProxy" onselectstart="return false"
-                            v-permission="['admin']">
+                            v-permission="['admin','test_user','test_viewer']">
                     日志代理
                 </el-menu-item>
                 <el-menu-item index="/systemSetting" onselectstart="return false">
                     系统设置
                 </el-menu-item>
+                <el-menu-item index="/testPlatform"><a href="http://testplat.internal.mob.com/daily" target="_blank" style="text-decoration:none;">测试平台</a></el-menu-item>
             </el-menu>
         </div>
         <div class="avatar">

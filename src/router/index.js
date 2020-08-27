@@ -12,6 +12,7 @@ import lostPage from '../components/api/404';
 import PersonSetting from '../components/common/setting/personal/PersonSetting';
 
 import User from '../components/system/User';
+import testPlatformName from '../components/testPlatform/home';
 
 import Setting from '../components/system/Setting';
 import axios from 'axios';
@@ -23,7 +24,7 @@ const router = new VueRouter({
 		{
 			name: 'index',
 			path: '/',
-			redirect: '/logProxy'
+			redirect: '/systemSetting/personsetting'
 		},
 		{
 			name: 'logProxy',
@@ -70,6 +71,20 @@ const router = new VueRouter({
 					name: 'testProcessName',
 					meta: { title: '测试管理', level: 1 },
 					component: testProcessName
+				}
+			]
+		},
+		{
+			name: 'testPlatform',
+			path: '/testPlatform',
+			redirect: '/testPlatform/home',
+			component: NavComponent,
+			children: [
+				{
+					path: '/testPlatform/home',
+					name: 'testPlatformName',
+					meta: { title: '测试平台', level: 1 },
+					component: testPlatformName
 				}
 			]
 		},
