@@ -106,7 +106,7 @@
                         message: '请选择角色',
                         trigger: 'change'
                         }">
-                        <el-select v-model="form.role.id" placeholder="请选择角色" @focus="getRoleList()">
+                        <el-select v-model="form.role.id" placeholder="请选择角色" >
                             <el-option
                                 v-for="item in userRole"
                                 :key="item.id"
@@ -244,11 +244,13 @@ export default {
         edit(row) {
             this.updateVisible = true;
             this.form = Object.assign({},row);
-            let url = "/user/user/role";
+            let url = "/user/role";
             this.$axios.get(process.env.VUE_APP_API_SYS+url + "/" + row.id).then(res =>{
                 let data = res.data;
                 let roles = data.roles[0];
                 this.form.role = roles;
+                this.form.role.id = roles.id;
+                console.log(this.form.role.id)
             });
         },
         editPassword(row) {
@@ -297,7 +299,7 @@ export default {
                     this.tableData = res.data.list;
                     this.total = res.data.total;
                     this.pageNo = res.data.pageNo;
-                    let url = "/user/user/role";
+                    let url = "/user/role";
                     for (let i = 0; i < this.tableData.length; i++) {
                         this.$axios.get(process.env.VUE_APP_API_SYS+url + "/" + this.tableData[i].id).then(res =>{
                             let data = res.data;
@@ -316,7 +318,7 @@ export default {
                 } catch (error) {
                     
                 }
-            this.getRoleList();
+            // this.getRoleList();
         },
         changeSwitch(row) {
             console.log(row)
@@ -386,6 +388,7 @@ export default {
     },
     activated() {
         this.search();
+        this.getRoleList();
     }
 }
 </script>
